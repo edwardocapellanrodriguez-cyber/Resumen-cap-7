@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 1 · Introducción a la IPO</title>
+<meta name="description" content="Resumen completo del Capítulo 1 del libro La interacción persona-ordenador: disciplina, historia, objetivos, interfaz, interdisciplinariedad, usabilidad y diseño centrado en el usuario.">
+<meta name="theme-color" content="#1f4fd8">
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --ink:#1b1f2a; --muted:#5b6475; --line:#e3e6ee;
+    --brand:#1f4fd8; --brand-soft:#e8eefc; --accent:#ff8a3d; --ok:#1a8f5b; --bad:#c2352f;
+    --radius:16px; --shadow:0 1px 2px rgba(20,30,60,.06),0 6px 20px rgba(20,30,60,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0f1220; --card:#171b2e; --ink:#eef0f7; --muted:#a3abc0; --line:#262b45;
+      --brand:#7aa2ff; --brand-soft:#1e2748; --accent:#ffa566; --ok:#4fd39a; --bad:#ff7d76;
+      --shadow:none;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-padding-top:70px}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-text-size-adjust:100%}
+  h1,h2,h3{line-height:1.2;margin:0}
+  p{margin:0 0 .9em}
+  ul{margin:0 0 1em;padding-left:1.2em}
+  li{margin:.25em 0}
+  a{color:var(--brand)}
+
+  #progress{position:fixed;top:0;left:0;height:4px;width:0;background:var(--accent);z-index:50;transition:width .1s}
+
+  header.hero{background:linear-gradient(135deg,#1f4fd8,#5b2fd1);color:#fff;padding:44px 20px 64px}
+  .wrap{max-width:820px;margin:0 auto}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);padding:4px 12px;border-radius:999px;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+  .hero h1{font-size:clamp(1.8rem,6vw,2.7rem);margin:14px 0 10px}
+  .hero p{max-width:60ch;opacity:.92}
+  .hero small{opacity:.8}
+
+  nav.toc{position:sticky;top:0;z-index:40;background:var(--card);border-bottom:1px solid var(--line);margin-top:-28px}
+  nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none;position:relative;overscroll-behavior-x:contain}
+  nav.toc .wrap::-webkit-scrollbar{display:none}
+  nav.toc a{white-space:nowrap;text-decoration:none;color:var(--muted);font-size:.9rem;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+  nav.toc a.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+  main{padding:24px 16px 80px}
+  section{max-width:820px;margin:0 auto 22px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 20px}
+  section>h2{font-size:1.45rem;margin-bottom:6px;display:flex;gap:12px;align-items:center}
+  .num{flex:none;width:36px;height:36px;border-radius:10px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-weight:700}
+  h3{font-size:1.08rem;margin:22px 0 8px;color:var(--brand)}
+  .lead{color:var(--muted)}
+  .callout{border-left:4px solid var(--accent);background:var(--brand-soft);padding:12px 16px;border-radius:0 12px 12px 0;margin:16px 0}
+  .callout b{color:var(--brand)}
+  .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:14px 0}
+  .mini{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--bg)}
+  .mini h4{margin:0 0 6px;font-size:1rem}
+  .mini p{margin:0;color:var(--muted);font-size:.94rem}
+  .stat{font-size:2.4rem;font-weight:800;color:var(--accent);line-height:1}
+
+  /* ilustraciones */
+  figure.fig{margin:20px 0;padding:14px 10px 10px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+  figure.fig svg{display:block;width:100%;max-width:520px;height:auto;margin:0 auto}
+  figure.fig figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+  .fig text{fill:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px;font-weight:600}
+  .fig text.sm{font-size:12px;font-weight:500;fill:var(--muted)}
+  .fig text.g-onb{fill:var(--card)}
+  .fig text.g-ona{fill:#1b1f2a}
+  .fig text.g-bad{fill:var(--bad)}
+  .g-fb{fill:var(--brand)} .g-fs{fill:var(--brand-soft)} .g-fa{fill:var(--accent)} .g-fc{fill:var(--card)} .g-fok{fill:var(--ok)} .g-fi{fill:var(--ink)}
+  .g-sb{stroke:var(--brand);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  .g-si{stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .g-sl{stroke:var(--line);stroke-width:2;fill:none}
+  .g-box{fill:var(--card);stroke:var(--brand);stroke-width:2}
+  .g-fsb{fill:var(--brand-soft);stroke:var(--brand);stroke-width:2.5}
+  .g-sd{stroke:var(--muted);stroke-width:1.8;stroke-dasharray:5 4;fill:none}
+
+  /* tabs / filtros */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .filters button{font:inherit;font-size:.88rem;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+  .filters button[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .timeline{list-style:none;margin:10px 0 0;padding:0 0 0 18px;border-left:3px solid var(--brand-soft)}
+  .timeline li{position:relative;margin:0 0 16px;padding-left:14px}
+  .timeline li::before{content:"";position:absolute;left:-26px;top:7px;width:13px;height:13px;border-radius:50%;background:var(--brand);border:3px solid var(--card)}
+  .timeline .yr{font-weight:800;color:var(--brand)}
+  .timeline .cat{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-left:8px}
+  .timeline li[hidden]{display:none}
+
+  /* acordeón */
+  details{border:1px solid var(--line);border-radius:12px;margin:10px 0;background:var(--bg)}
+  summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--brand)}
+  details[open]>summary::after{content:"–"}
+  details>.body{padding:0 16px 14px}
+  details .body p:last-child,details .body ul:last-child{margin-bottom:0}
+
+  /* pasos */
+  .steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+  .steps>li{counter-increment:s;position:relative;padding:14px 14px 14px 58px;border:1px solid var(--line);border-radius:12px;margin:10px 0;background:var(--bg)}
+  .steps>li::before{content:counter(s);position:absolute;left:14px;top:14px;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700}
+  .steps b{display:block;margin-bottom:2px}
+
+  .pillars{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin:14px 0}
+  .pillar{border-radius:12px;padding:14px;border:1px solid var(--line)}
+  .pillar.a{background:rgba(31,79,216,.10)}.pillar.b{background:rgba(26,143,91,.12)}.pillar.c{background:rgba(255,138,61,.14)}
+  .pillar h4{margin:0 0 4px}
+
+  /* quiz */
+  .q{margin:18px 0}
+  .q p{font-weight:600;margin-bottom:8px}
+  .opt{display:block;width:100%;text-align:left;font:inherit;padding:11px 14px;margin:7px 0;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+  .opt:disabled{cursor:default}
+  .opt.ok{border-color:var(--ok);background:rgba(26,143,91,.14)}
+  .opt.bad{border-color:var(--bad);background:rgba(194,53,47,.12)}
+  .fb{font-size:.92rem;color:var(--muted);margin-top:4px;min-height:1.2em}
+  #score{font-weight:700;margin-top:14px}
+  .btn{font:inherit;padding:10px 18px;border-radius:12px;border:0;background:var(--brand);color:#fff;cursor:pointer}
+
+  footer{max-width:820px;margin:0 auto;color:var(--muted);font-size:.86rem;padding:0 4px}
+  #top{position:fixed;right:16px;bottom:16px;width:46px;height:46px;border-radius:50%;border:0;background:var(--brand);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .2s}
+  #top.show{opacity:1;pointer-events:auto}
+  @media print{nav.toc,#top,#progress,.filters,#quiz{display:none}details{border:0}details>.body{display:block}section{box-shadow:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">Capítulo 1 · Resumen completo</span>
+    <h1>Introducción a la Interacción Persona-Ordenador</h1>
+    <p>Qué es la IPO, de dónde viene, para qué sirve, qué es una interfaz usable y cómo se diseña pensando en las personas.</p>
+    <small>Libro: <i>La interacción persona-ordenador</i> (AIPO) · Capítulo 1 · Texto redactado con palabras propias a partir del capítulo.</small>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Índice">
+  <div class="wrap" id="toc">
+    <a href="#s1">1 · Disciplina</a>
+    <a href="#s2">2 · Historia</a>
+    <a href="#s3">3 · Objetivos</a>
+    <a href="#s4">4 · Interfaz</a>
+    <a href="#s5">5 · Disciplinas</a>
+    <a href="#s6">6 · Usabilidad</a>
+    <a href="#s7">7 · Diseño centrado</a>
+    <a href="#quiz">Repaso</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===== Objetivos del capítulo ===== -->
+<section id="obj">
+  <h2>Lo que vas a aprender</h2>
+  <ul>
+    <li>Entender y describir qué es la interacción persona-ordenador y por qué importa.</li>
+    <li>Conocer sus objetivos y los conceptos básicos.</li>
+    <li>Saber qué significa que un sistema sea usable y cómo comprobarlo.</li>
+    <li>Valorar que los ordenadores deben ser accesibles para todas las personas.</li>
+    <li>Reconocer las muchas disciplinas que aportan a la IPO.</li>
+  </ul>
+  <div class="callout"><b>Idea central:</b> cuando una persona y un ordenador se comunican lo hacen a través de una <b>interfaz</b>. Si está bien pensada, ayuda; si está mal diseñada, se convierte en una barrera. Además, la interfaz forma parte de un entorno cultural, físico y social que hay que tener en cuenta al diseñarla.</div>
+  <figure class="fig">
+    <svg viewBox="0 0 480 130" role="img" aria-label="La persona y el ordenador se comunican a través de la interfaz">
+      <defs><marker id="ah0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="g-fi"/></marker></defs>
+      <circle cx="55" cy="38" r="15" class="g-fb"/>
+      <path d="M28 92 Q28 58 55 58 Q82 58 82 92 Z" class="g-fb"/>
+      <text x="55" y="115" text-anchor="middle">Persona</text>
+      <line x1="92" y1="65" x2="168" y2="65" class="g-si" marker-start="url(#ah0)" marker-end="url(#ah0)"/>
+      <rect x="172" y="38" width="136" height="54" rx="27" class="g-fb"/>
+      <text x="240" y="71" text-anchor="middle" class="g-onb" style="font-size:16px">Interfaz</text>
+      <line x1="312" y1="65" x2="388" y2="65" class="g-si" marker-start="url(#ah0)" marker-end="url(#ah0)"/>
+      <rect x="395" y="36" width="72" height="50" rx="6" class="g-si"/>
+      <line x1="431" y1="86" x2="431" y2="98" class="g-si"/>
+      <line x1="414" y1="98" x2="448" y2="98" class="g-si"/>
+      <text x="431" y="118" text-anchor="middle">Ordenador</text>
+      <text x="132" y="52" text-anchor="middle" class="sm">órdenes</text>
+      <text x="350" y="52" text-anchor="middle" class="sm">respuestas</text>
+    </svg>
+    <figcaption>La interfaz es el punto de contacto donde se intercambian información, órdenes y datos.</figcaption>
+  </figure>
+</section>
+
+<!-- ===== 1 ===== -->
+<section id="s1">
+  <h2><span class="num">1</span>La disciplina</h2>
+  <p>La <b>Interacción Persona-Ordenador (IPO)</b> se conoce internacionalmente como <i>Human-Computer Interaction</i> (HCI) o <i>Computer-Human Interaction</i> (CHI).</p>
+  <h3>¿Por qué ese nombre en español?</h3>
+  <p>Los autores explican su elección: «Hombre» suena sexista y «ser humano» resulta largo, así que eligieron <b>persona</b>. Para la otra mitad, «máquina» les parecía demasiado amplio, y entre «computador» y «ordenador» se quedaron con <b>ordenador</b>, el término más usado en España.</p>
+
+  <h3>¿Por qué es tan importante estudiar la interfaz?</h3>
+  <div class="grid">
+    <div class="mini"><div class="stat">≈48%</div><p>del código de una aplicación se dedica a la interfaz, según una encuesta a desarrolladores de Myers.</p></div>
+    <div class="mini"><h4>Paradoja</h4><p>Pese a su peso, es de las materias que menos espacio tienen en las carreras de Informática, aunque otras carreras ya se interesan por ella.</p></div>
+  </div>
+
+  <h3>Definición</h3>
+  <p>La organización ACM, a través de su grupo SIGCHI, propone esta idea: la IPO es la disciplina que se ocupa de <b>diseñar, evaluar e implementar sistemas informáticos interactivos para el uso de personas</b>, además de estudiar los fenómenos importantes que los rodean.</p>
+  <p>Su tema central es la interacción entre una o más personas y uno o más ordenadores. La imagen clásica es alguien frente a su escritorio, pero el campo es mucho más amplio:</p>
+  <ul>
+    <li>Ordenadores en cabinas de avión, coches, móviles, libros electrónicos o realidad virtual.</li>
+    <li>Usuarios que trabajan en grupo u organizaciones (sistemas distribuidos, trabajo cooperativo).</li>
+    <li>Una persona que consulta su agenda mientras camina a una reunión.</li>
+    <li>Personas con poca visión o movilidad que usan lectores de pantalla o reconocimiento de voz.</li>
+  </ul>
+  <figure class="fig">
+    <svg viewBox="0 0 480 250" role="img" aria-label="Ejemplos de dónde hay interacción persona-ordenador: portátil, móvil, coche, avión, realidad virtual y voz">
+      <!-- portátil -->
+      <rect x="50" y="20" width="60" height="38" rx="4" class="g-si"/>
+      <path d="M36 66 H124" class="g-si"/>
+      <text x="80" y="98" text-anchor="middle">Escritorio</text>
+      <!-- móvil -->
+      <rect x="222" y="12" width="36" height="64" rx="7" class="g-si"/>
+      <line x1="233" y1="67" x2="247" y2="67" class="g-si"/>
+      <text x="240" y="98" text-anchor="middle">Móvil</text>
+      <!-- coche -->
+      <path d="M363 62 V50 L377 47 L388 29 H414 L426 47 L438 50 V62 Z" class="g-si"/>
+      <circle cx="386" cy="64" r="7" class="g-si" style="fill:var(--card)"/>
+      <circle cx="415" cy="64" r="7" class="g-si" style="fill:var(--card)"/>
+      <text x="400" y="98" text-anchor="middle">Coche</text>
+      <!-- avión -->
+      <ellipse cx="80" cy="165" rx="34" ry="7" class="g-fb"/>
+      <path d="M72 165 L56 192 L67 192 L90 165 Z" class="g-fb"/>
+      <path d="M72 165 L56 138 L67 138 L90 165 Z" class="g-fb"/>
+      <path d="M50 165 L42 150 L52 150 L62 165 Z" class="g-fb"/>
+      <text x="80" y="220" text-anchor="middle">Avión</text>
+      <!-- realidad virtual -->
+      <rect x="205" y="148" width="70" height="36" rx="12" class="g-si"/>
+      <circle cx="225" cy="166" r="7" class="g-si"/>
+      <circle cx="255" cy="166" r="7" class="g-si"/>
+      <path d="M205 166 H193 M275 166 H287" class="g-si"/>
+      <text x="240" y="220" text-anchor="middle">Realidad virtual</text>
+      <!-- voz / accesibilidad -->
+      <path d="M372 158 H382 L396 146 V186 L382 174 H372 Z" class="g-fb"/>
+      <path d="M404 156 Q415 166 404 176" class="g-sb"/>
+      <path d="M412 148 Q430 166 412 184" class="g-sb"/>
+      <text x="400" y="220" text-anchor="middle">Voz y accesibilidad</text>
+    </svg>
+    <figcaption>La IPO va mucho más allá del ordenador de escritorio.</figcaption>
+  </figure>
+</section>
+
+<!-- ===== 2 ===== -->
+<section id="s2">
+  <h2><span class="num">2</span>Historia de la IPO</h2>
+  <h3>Preliminares</h3>
+  <p>Toda interacción ocurre dentro de un contexto social y organizacional, y cada propósito pide un tipo distinto de aplicación. A grandes rasgos:</p>
+  <ul>
+    <li><b>Finales de los 70 y principios de los 80:</b> los psicólogos se interesan por cómo se procesa la información en los sistemas (por ejemplo, el diseño de menús: nombres, profundidad frente a anchura).</li>
+    <li><b>Mediados de los 80:</b> la usabilidad de los sistemas para un solo usuario gana espacio con la explosión del PC.</li>
+    <li><b>Finales de los 80 y los 90:</b> el foco pasa a estaciones de trabajo potentes, comunicaciones avanzadas, multimedia, multitarea y realidad virtual.</li>
+  </ul>
+  <p>La comunidad siempre ha defendido que, además de la interacción individual con la máquina, hay que estudiar el trabajo en grupo, la integración de medios y el impacto de la tecnología en el trabajo, el hogar y la sociedad.</p>
+
+  <h3>Un campo nacido del cruce de disciplinas</h3>
+  <div class="grid">
+    <div class="mini"><h4>Gráficos por ordenador</h4><p>Nacen con el lápiz óptico y los monitores de rayos catódicos. De aquí vienen el ratón, las ventanas, la metáfora del escritorio y los editores «apuntar y hacer clic». El hito inicial es Sketchpad (1963).</p></div>
+    <div class="mini"><h4>Sistemas operativos</h4><p>Aportaron técnicas para dispositivos de entrada/salida, ajustar el tiempo de respuesta al ritmo humano, multiproceso y soporte de ventanas y animación.</p></div>
+    <div class="mini"><h4>Ergonomía</h4><p>Parecida a las anteriores, pero centrada en el estudio del trabajo: estrés, rutina, postura y diseño visual de las pantallas.</p></div>
+  </div>
+
+  <h3>Los orígenes: una cadena de herencias</h3>
+  <p>La interfaz gráfica de Windows 2000 se apoya en la del Macintosh, que a su vez se basó en el trabajo de Xerox PARC, que bebió de lo hecho en el SRI (Stanford Research Institute) y el MIT. Incluso las herramientas con las que hoy se construye software (<i>toolkits</i> y <i>interface builders</i>, como Visual Studio) nacieron en el mundo universitario, y el crecimiento de la Web debe mucho a la investigación en hipertexto.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 480 246" role="img" aria-label="Cadena de herencias de la interfaz gráfica: SRI y MIT, Xerox PARC, Macintosh y Windows">
+      <defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="g-fi"/></marker></defs>
+      <rect x="110" y="6" width="260" height="42" rx="12" class="g-fsb"/>
+      <text x="240" y="32" text-anchor="middle">SRI y MIT (investigación)</text>
+      <line x1="240" y1="50" x2="240" y2="66" class="g-si" marker-end="url(#ah2)"/>
+      <rect x="110" y="70" width="260" height="42" rx="12" class="g-fsb"/>
+      <text x="240" y="96" text-anchor="middle">Xerox PARC</text>
+      <line x1="240" y1="114" x2="240" y2="130" class="g-si" marker-end="url(#ah2)"/>
+      <rect x="110" y="134" width="260" height="42" rx="12" class="g-fsb"/>
+      <text x="240" y="160" text-anchor="middle">Apple Macintosh</text>
+      <line x1="240" y1="178" x2="240" y2="194" class="g-si" marker-end="url(#ah2)"/>
+      <rect x="110" y="198" width="260" height="42" rx="12" class="g-fb"/>
+      <text x="240" y="224" text-anchor="middle" class="g-onb">Microsoft Windows</text>
+    </svg>
+    <figcaption>De la investigación universitaria a la interfaz que usamos hoy.</figcaption>
+  </figure>
+
+  <h3>Línea de tiempo</h3>
+  <div class="filters" id="tl-filters" role="group" aria-label="Filtrar línea de tiempo">
+    <button data-f="all" aria-pressed="true">Todo</button>
+    <button data-f="directa" aria-pressed="false">Manipulación directa</button>
+    <button data-f="raton" aria-pressed="false">Ratón</button>
+    <button data-f="ventanas" aria-pressed="false">Ventanas</button>
+    <button data-f="texto" aria-pressed="false">Texto y cálculo</button>
+    <button data-f="hiper" aria-pressed="false">Hipertexto</button>
+  </div>
+  <ul class="timeline" id="timeline">
+    <li data-c="hiper"><span class="yr">1945</span><span class="cat">Hipertexto</span><br>Vannevar Bush presenta la idea del hipertexto con su «Memex».</li>
+    <li data-c="directa texto"><span class="yr">1962</span><span class="cat">Texto</span><br>Engelbart (Stanford Research) implementa un procesador de textos con ajuste de línea automático, buscar y reemplazar, macros y desplazamiento.</li>
+    <li data-c="directa"><span class="yr">1963</span><span class="cat">Manipulación directa</span><br>Ivan Sutherland presenta <b>Sketchpad</b> en su tesis del MIT: se podían coger, mover y redimensionar objetos gráficos con un lápiz óptico.</li>
+    <li data-c="raton"><span class="yr">1965</span><span class="cat">Ratón</span><br>En el proyecto NLS del SRI aparece el primer ratón, como sustituto económico del lápiz óptico.</li>
+    <li data-c="hiper"><span class="yr">1965</span><span class="cat">Hipertexto</span><br>Ted Nelson acuña la palabra «hipertexto».</li>
+    <li data-c="directa"><span class="yr">1966-67</span><span class="cat">Manipulación directa</span><br>William Newman crea en Londres un sistema de gráficos manipulables que introduce los «light handles», probablemente el primer widget.</li>
+    <li data-c="directa ventanas raton texto"><span class="yr">1968</span><span class="cat">Demostración NLS</span><br>Engelbart muestra en un film usos del ratón, la edición con él y el uso de varias ventanas. El sistema AMBIT/G del MIT ya incluía iconos y menús dinámicos.</li>
+    <li data-c="ventanas"><span class="yr">1969</span><span class="cat">Ventanas</span><br>Alan Kay propone en su tesis las ventanas solapadas.</li>
+    <li data-c="ventanas texto"><span class="yr">1974</span><span class="cat">Ventanas y texto</span><br>Smalltalk e InterLisp popularizan las ventanas solapadas; en Xerox PARC nace Bravo, el primer editor WYSIWYG («lo que ves es lo que obtienes»). También aparece EMACS en el MIT.</li>
+    <li data-c="directa"><span class="yr">1975</span><span class="cat">Manipulación directa</span><br>David Canfield Smith, con <b>Pygmalion</b>, usa por primera vez el término «icono».</li>
+    <li data-c="directa"><span class="yr">1977</span><span class="cat">Manipulación directa</span><br>Alan Kay propone el <b>Dynabook</b> y emplea la expresión «interfaces de manipulación directa».</li>
+    <li data-c="texto"><span class="yr">1977-78</span><span class="cat">Hoja de cálculo</span><br>Frankston y Bricklin crean <b>VisiCalc</b> para el Apple II, la primera hoja de cálculo. En 1982 se funda Lotus y lanza Lotus 1-2-3.</li>
+    <li data-c="directa raton ventanas"><span class="yr">1981</span><span class="cat">Primer sistema comercial</span><br>Sale el <b>Xerox Star</b>, el primer sistema comercial que usa ampliamente la manipulación directa; incluye ratón y ventanas (aún no solapadas).</li>
+    <li data-c="directa ventanas"><span class="yr">1982</span><span class="cat">Lisa y Shneiderman</span><br>Apple lanza el Lisa, con ventanas solapadas. Ben Shneiderman bautiza el término «manipulación directa» e identifica sus componentes.</li>
+    <li data-c="ventanas directa"><span class="yr">1984</span><span class="cat">Macintosh y X Window</span><br>El Macintosh populariza las ventanas solapadas. En el MIT se desarrolla el sistema estándar X Window, habitual en UNIX.</li>
+    <li data-c="ventanas"><span class="yr">1985</span><span class="cat">Windows 1.0</span><br>Microsoft publica la primera versión de Windows sobre MS-DOS. Más tarde llegan Windows for Workgroups (1992) y Windows 95 (1995).</li>
+  </ul>
+</section>
+
+<!-- ===== 3 ===== -->
+<section id="s3">
+  <h2><span class="num">3</span>Objetivos de la IPO</h2>
+  <p>Busca <b>desarrollar o mejorar la seguridad, utilidad, efectividad, eficiencia y usabilidad</b> de los sistemas que incluyen computadoras. Aquí «sistema» no es solo hardware y software, sino todo el entorno.</p>
+  <p>Para construir sistemas interactivos hace falta:</p>
+  <ol class="steps">
+    <li><b>Comprender los factores</b>psicológicos, ergonómicos, organizativos y sociales que determinan cómo la gente trabaja y usa los ordenadores.</li>
+    <li><b>Desarrollar herramientas y técnicas</b>que ayuden a los diseñadores a lograr sistemas adecuados a las actividades para las que se usarán.</li>
+    <li><b>Lograr una interacción eficiente, efectiva y segura</b>tanto a nivel individual como de grupo.</li>
+  </ol>
+  <div class="callout"><b>Clave:</b> los usuarios no tienen que cambiar radicalmente su forma de ser; son los sistemas los que deben diseñarse para satisfacer lo que el usuario necesita.</div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section id="s4">
+  <h2><span class="num">4</span>La interfaz de usuario</h2>
+  <p>La interfaz es una <b>superficie de contacto entre dos entidades</b>; en la IPO, la persona y el ordenador. Negroponte lo resume así: es el lugar donde los bits y las personas se encuentran.</p>
+
+  <h3>Ejemplos cotidianos y dos conceptos</h3>
+  <p>La manilla de una puerta es la interfaz entre la puerta y quien la abre; el volante y el acelerador lo son entre el coche y el conductor. La manilla es sólida, está firmemente sujeta y se coloca a la altura de la mano con una forma que se adapta a ella: la interfaz refleja las cualidades físicas de ambas partes. De ahí salen dos ideas de diseño:</p>
+  <div class="grid">
+    <div class="mini"><h4>Visibilidad</h4><p>Para poder actuar sobre un objeto, este tiene que verse.</p></div>
+    <div class="mini"><h4>Comprensión intuitiva</h4><p>Debe ser evidente sobre qué parte actuar y cómo hacerlo.</p></div>
+  </div>
+  <p>Juntas forman el principio conocido como <b>affordance</b> (Norman).</p>
+  <figure class="fig">
+    <svg viewBox="0 0 480 225" role="img" aria-label="Dos puertas: una con manilla clara y otra con placa lisa que no indica cómo usarla">
+      <!-- puerta con manilla -->
+      <rect x="80" y="14" width="80" height="150" rx="3" class="g-si"/>
+      <circle cx="146" cy="100" r="5" class="g-fb"/>
+      <line x1="146" y1="100" x2="124" y2="100" class="g-sb" style="stroke-width:5"/>
+      <text x="120" y="190" text-anchor="middle">Manilla clara</text>
+      <text x="120" y="208" text-anchor="middle" class="sm">se ve y se entiende</text>
+      <!-- puerta lisa -->
+      <rect x="320" y="14" width="80" height="150" rx="3" class="g-si"/>
+      <rect x="345" y="72" width="30" height="46" rx="4" class="g-si" style="fill:var(--brand-soft)"/>
+      <text x="360" y="104" text-anchor="middle" class="g-bad" style="font-size:26px">?</text>
+      <text x="360" y="190" text-anchor="middle">Placa lisa</text>
+      <text x="360" y="208" text-anchor="middle" class="sm">¿empujo o jalo?</text>
+    </svg>
+    <figcaption>Ejemplo ilustrativo de visibilidad y comprensión intuitiva.</figcaption>
+  </figure>
+
+  <h3>Qué es la interfaz de usuario</h3>
+  <ul>
+    <li>Es lo que del sistema el usuario toca <b>física, perceptiva o conceptualmente</b>. Lo que queda oculto se llama <b>implementación</b>.</li>
+    <li>Funciona como un lenguaje de entrada para el usuario, un lenguaje de salida para el ordenador y un protocolo de interacción.</li>
+    <li>Además del nivel físico hay un <b>nivel cognitivo</b>: la persona debe comprender el protocolo, actuar sobre la interfaz e interpretar sus respuestas.</li>
+    <li>Para Van der Veer, es el conocimiento que los usuarios pueden y deberían tener para usar el sistema con éxito.</li>
+  </ul>
+  <figure class="fig">
+    <svg viewBox="0 0 480 250" role="img" aria-label="La interfaz es la parte visible; la implementación queda oculta bajo la superficie">
+      <rect x="0" y="112" width="480" height="138" class="g-fs"/>
+      <line x1="0" y1="112" x2="480" y2="112" class="g-sb"/>
+      <polygon points="240,24 292,112 188,112" class="g-fb"/>
+      <polygon points="168,112 312,112 346,184 240,238 132,180" class="g-fb" style="opacity:.3"/>
+      <text x="16" y="58">Interfaz</text>
+      <text x="16" y="76" class="sm">lo que el usuario ve,</text>
+      <text x="16" y="92" class="sm">oye y toca</text>
+      <text x="240" y="168" text-anchor="middle">Implementación</text>
+      <text x="240" y="186" text-anchor="middle" class="sm">oculta al usuario</text>
+    </svg>
+    <figcaption>Del sistema, el usuario solo entra en contacto con la interfaz; lo demás queda escondido.</figcaption>
+  </figure>
+  <div class="callout"><b>Consecuencias de una mala interfaz:</b> menor productividad, tiempo de aprendizaje inaceptable y demasiados errores, lo que genera frustración y, probablemente, que el sistema se abandone. También cuentan la postura del usuario, su organización y su ámbito cultural.</div>
+  <p>Hoy el ordenador ya no es solo pantalla, teclado y ratón sobre una silla: está en móviles, cajas de supermercado, balanzas de farmacia, cámaras, dispositivos médicos y, con la realidad virtual, quizá llegue a integrarse con el cuerpo. Por eso conviene abordar la IPO con una mirada amplia sobre los tipos de interfaz que existirán.</p>
+</section>
+
+<!-- ===== 5 ===== -->
+<section id="s5">
+  <h2><span class="num">5</span>La interdisciplinariedad de la IPO</h2>
+  <p>Diseñar interfaces exige más que informática: psicología del usuario, ergonomía del equipo, aspectos sociales, diseño, etc. En proyectos grandes se forma un <b>equipo interdisciplinario</b>; en equipos pequeños, las mismas personas asumen varios papeles. Toca cada disciplina para ver qué aporta:</p>
+  <figure class="fig">
+    <svg viewBox="0 0 480 380" role="img" aria-label="La IPO en el centro, rodeada de psicología, diseño, etnografía y sociología, ergonomía, programación, inteligencia artificial e ingeniería de software">
+      <g class="g-sl">
+        <line x1="240" y1="190" x2="240" y2="50"/><line x1="240" y1="190" x2="365" y2="103"/>
+        <line x1="240" y1="190" x2="396" y2="221"/><line x1="240" y1="190" x2="309" y2="316"/>
+        <line x1="240" y1="190" x2="171" y2="316"/><line x1="240" y1="190" x2="84" y2="221"/>
+        <line x1="240" y1="190" x2="115" y2="103"/>
+      </g>
+      <circle cx="240" cy="190" r="44" class="g-fb"/>
+      <text x="240" y="196" text-anchor="middle" class="g-onb" style="font-size:20px">IPO</text>
+      <g class="g-box">
+        <rect x="180" y="30" width="120" height="40" rx="10"/>
+        <rect x="305" y="81" width="120" height="44" rx="10"/>
+        <rect x="336" y="199" width="120" height="44" rx="10"/>
+        <rect x="249" y="294" width="120" height="44" rx="10"/>
+        <rect x="111" y="294" width="120" height="44" rx="10"/>
+        <rect x="24" y="199" width="120" height="44" rx="10"/>
+        <rect x="55" y="81" width="120" height="44" rx="10"/>
+      </g>
+      <text x="240" y="55" text-anchor="middle">Psicología</text>
+      <text x="365" y="100" text-anchor="middle">Diseño</text>
+      <text x="396" y="218" text-anchor="middle"><tspan x="396">Etnografía y</tspan><tspan x="396" dy="16">sociología</tspan></text>
+      <text x="309" y="321" text-anchor="middle">Ergonomía</text>
+      <text x="171" y="313" text-anchor="middle"><tspan x="171">Ingeniería del</tspan><tspan x="171" dy="16">software</tspan></text>
+      <text x="84" y="218" text-anchor="middle"><tspan x="84">Inteligencia</tspan><tspan x="84" dy="16">artificial</tspan></text>
+      <text x="115" y="107" text-anchor="middle">Programación</text>
+    </svg>
+    <figcaption>Disciplinas que contribuyen al diseño de interfaces.</figcaption>
+  </figure>
+
+  <details open>
+    <summary>Psicología</summary>
+    <div class="body">
+      <p>Estudia el comportamiento y los estados de conciencia de la persona, sola o en grupo. Se distinguen dos ramas: la <b>cognitiva</b> (procesos mentales y comportamiento) y la <b>social</b> (origen y causas del comportamiento en contexto social).</p>
+      <p>Aporta teorías sobre cómo la gente procesa información y actúa en organizaciones, y también métodos para medir la satisfacción con nuestros diseños y comprobar que son tan efectivos como se desea.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Diseño</summary>
+    <div class="body"><p>Actividad orientada a producir en serie objetos útiles y bellos; hoy busca mejorar el entorno físico de las personas en conjunto. Es clave para lograr programas usables.</p></div>
+  </details>
+  <details>
+    <summary>Etnografía y sociología</summary>
+    <div class="body"><p>La etnografía estudia las costumbres y tradiciones de los pueblos. Grandes compañías contratan antropólogos para entender mejor a clientes y trabajadores y diseñar productos acordes con las tendencias culturales, porque la observación detallada, las entrevistas y la documentación sistemática responden preguntas que otros métodos no alcanzan.</p></div>
+  </details>
+  <details>
+    <summary>Ergonomía o factores humanos</summary>
+    <div class="body">
+      <p>Define y diseña herramientas y objetos para ambientes de trabajo, descanso y hogar. Persigue seguridad, eficiencia y fiabilidad, además de comodidad y satisfacción. Se centra en las características físicas de la interacción: el entorno y la forma de la pantalla, por ejemplo. Algunos aspectos:</p>
+      <ul>
+        <li><b>Organización de controles y pantallas:</b> deben permitir actuar rápido y alcanzar todo sin mover el cuerpo en exceso.</li>
+        <li><b>Información importante a la altura de los ojos</b>, controles bien espaciados e iluminación que evite reflejos.</li>
+        <li><b>Entorno físico</b> donde se realiza la interacción.</li>
+        <li><b>Salud:</b> postura, temperatura, luz, ruido y tiempo frente al ordenador; las empresas ya consideran la prevención de riesgos laborales.</li>
+        <li><b>Uso del color:</b> los colores deben ser lo más distintos posible y distinguirse aunque cambie el contraste.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Programación</summary>
+    <div class="body">
+      <p>Es la herramienta para «decirle al ordenador lo que debe hacer»: todo lo que el equipo responde al usuario lo programó alguien. Un buen programa debe funcionar, no dar problemas, estar bien documentado y ser eficiente. Incluye lenguajes y herramientas de diseño de interfaces. Cinco grandes tipos:</p>
+      <ul>
+        <li><b>Orientada a objetos:</b> basada en clases (datos y métodos) y objetos (instancias de una clase). La más usada hoy. Ej.: C++, Java.</li>
+        <li><b>Imperativa:</b> comandos que actualizan variables en memoria; está muy ligada a la arquitectura del computador. Ej.: Pascal, Ada.</li>
+        <li><b>Funcional:</b> el programa es una función (o grupo de funciones) que se componen entre sí. Ej.: LISP, ML, HOPE.</li>
+        <li><b>Declarativa:</b> basada en relaciones y más cercana a cómo piensan las personas que a cómo trabaja la máquina; destaca por claridad, sencillez y base matemática. Ej.: Prolog, Haskell, Modula-2.</li>
+        <li><b>Concurrente:</b> disciplina reciente aún en investigación, que suele avanzar junto con el hardware. Ej.: Ada tiene un enfoque de concurrencia.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Inteligencia artificial</summary>
+    <div class="body"><p>Diseña programas inteligentes que simulan aspectos del comportamiento humano. Se ha aplicado a tutores, sistemas expertos, interfaces inteligentes y de lenguaje natural por voz; los agentes que ayudan a navegar y reducen tareas rutinarias eran una novedad en el multimedia.</p></div>
+  </details>
+  <details>
+    <summary>Ingeniería de software</summary>
+    <div class="body"><p>Estudia técnicas de diseño y desarrollo de software. Solo con procedimientos propios de la ingeniería se obtiene software de calidad, por eso es imprescindible en un sistema interactivo.</p></div>
+  </details>
+</section>
+
+<!-- ===== 6 ===== -->
+<section id="s6">
+  <h2><span class="num">6</span>Usabilidad</h2>
+  <p>Para cumplir sus objetivos, un sistema interactivo debe ser <b>usable</b> y, dado que los ordenadores llegan a casi toda la población, también <b>accesible</b>.</p>
+  <p>La utilidad de un sistema tiene un componente de <i>funcionalidad</i> y otro basado en <i>cómo se puede usar</i> esa funcionalidad. Este segundo es el que interesa aquí.</p>
+  <div class="callout"><b>Definición:</b> la usabilidad es la medida en que un producto puede ser usado por determinados usuarios para lograr objetivos concretos con <b>efectividad, eficiencia y satisfacción</b> en un contexto de uso específico.</div>
+  <figure class="fig">
+    <svg viewBox="0 0 480 300" role="img" aria-label="La usabilidad reúne efectividad, eficiencia y satisfacción">
+      <circle cx="190" cy="105" r="82" class="g-fb" style="opacity:.35"/>
+      <circle cx="290" cy="105" r="82" class="g-fa" style="opacity:.45"/>
+      <circle cx="240" cy="192" r="82" class="g-fok" style="opacity:.35"/>
+      <text x="148" y="92" text-anchor="middle">Efectividad</text>
+      <text x="332" y="92" text-anchor="middle">Eficiencia</text>
+      <text x="240" y="240" text-anchor="middle">Satisfacción</text>
+      <text x="240" y="136" text-anchor="middle" style="font-size:16px">Usabilidad</text>
+    </svg>
+    <figcaption>Los tres componentes de la definición de usabilidad, siempre en un contexto de uso concreto.</figcaption>
+  </figure>
+
+  <h3>¿Por qué importa?</h3>
+  <p>Diseñar con principios de usabilidad ha demostrado reducir los costes de producción, de mantenimiento y apoyo, y de uso, además de mejorar la calidad del producto. Las cosas suelen ser difíciles de usar porque el desarrollo pone el énfasis en la tecnología y no en la persona para quien se hace el dispositivo (Norman).</p>
+  <p>La interfaz es la puerta a la funcionalidad del sistema; si está mal diseñada, frena su uso. Un software usable es fácil de aprender y fácil de usar (eficiente e intuitivo). El aprendizaje se mide por la rapidez al hacer una tarea, los errores cometidos y la satisfacción de la gente. Una aplicación usable deja que el usuario se concentre en <b>su tarea</b> y no en la aplicación.</p>
+
+  <details>
+    <summary>Críticas habituales a la usabilidad</summary>
+    <div class="body">
+      <ul>
+        <li>«Los usuarios no necesitan mejores interfaces, sino mejor entrenamiento.»</li>
+        <li>«La usabilidad es subjetiva y no se puede medir.»</li>
+        <li>«El diseño de la interfaz va implícito en el del software, no hace falta planificarlo ni calcular su coste.»</li>
+        <li>«Si el diseñador conoce las guías de estilo, saldrán buenas interfaces.»</li>
+        <li>«La interfaz no hace falta hasta el diseño detallado.»</li>
+        <li>«La usabilidad encarece y alarga el desarrollo.»</li>
+      </ul>
+    </div>
+  </details>
+
+  <h3>Principios generales de usabilidad (Dix)</h3>
+  <p>Toca cada principio para ver su significado.</p>
+
+  <details>
+    <summary>Facilidad de aprendizaje</summary>
+    <div class="body">
+      <p>Que sea mínimo el tiempo entre no conocer la aplicación y usarla productivamente, que se reduzca el tiempo de ayuda y que haya apoyo para usuarios intermedios. Para ello el sistema debe ser:</p>
+      <ul>
+        <li><b>Sintetizable:</b> el usuario puede ver el efecto de operaciones anteriores en el estado actual.</li>
+        <li><b>Familiar:</b> encaja con el conocimiento previo de la persona, venga del mundo real o de otros sistemas.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Consistencia</summary>
+    <div class="body">
+      <p>Un sistema es consistente cuando sus mecanismos se usan siempre de la misma manera, en cualquier momento. Es difícil mantenerla entre versiones por la presión del mercado, pero hay que acercarse lo máximo posible. Recomendaciones:</p>
+      <ul>
+        <li>Seguir guías de estilo siempre que se pueda.</li>
+        <li>Usar un «look &amp; feel» común.</li>
+        <li>No modificar si no es necesario.</li>
+        <li>Añadir técnicas nuevas al conjunto existente en vez de cambiar las conocidas.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Flexibilidad</summary>
+    <div class="body">
+      <p>Es la variedad de formas en que usuario y sistema intercambian información. Se mide con:</p>
+      <ul>
+        <li><b>Control del usuario:</b> que sea él quien conduce la interacción (poder deshacer, iniciar y terminar operaciones; avisar cuando algo no se pueda interrumpir).</li>
+        <li><b>Migración de tareas:</b> pasar el control entre usuario y sistema. Ej.: el corrector ortográfico puede hacerlo la persona, el sistema o ambos.</li>
+        <li><b>Capacidad de sustitución:</b> valores equivalentes intercambiables (el margen en centímetros o pulgadas, escrito o calculado), lo que evita cálculos y errores.</li>
+        <li><b>Adaptabilidad:</b> la interfaz se ajusta según el nivel del usuario (novato o experto) o sus secuencias repetidas.</li>
+      </ul>
+      <p>Técnicas: permitir suspender una acción para atender otra y ofrecer atajos y navegación por teclado.</p>
+    </div>
+  </details>
+  <details>
+    <summary>Robustez</summary>
+    <div class="body"><p>Reúne las características que permiten a la interacción cumplir sus objetivos y valorar si se lograron.</p></div>
+  </details>
+  <details>
+    <summary>Recuperabilidad</summary>
+    <div class="body"><p>Qué tan fácil es corregir una acción una vez que se detecta un error.</p></div>
+  </details>
+  <details>
+    <summary>Tiempo de respuesta</summary>
+    <div class="body"><p>El tiempo que tarda el sistema en reflejar los cambios de estado provocados por el usuario; debe ser soportable para quien lo usa.</p></div>
+  </details>
+  <details>
+    <summary>Adecuación a las tareas</summary>
+    <div class="body"><p>Hasta qué punto los servicios del sistema cubren todas las tareas que el usuario quiere hacer, tal como él las entiende.</p></div>
+  </details>
+  <details>
+    <summary>Disminución de la carga cognitiva</summary>
+    <div class="body"><p>Que el usuario se apoye más en <b>reconocer</b> que en <b>recordar</b>, sin tener que memorizar abreviaturas o códigos complicados.</p></div>
+  </details>
+</section>
+
+<!-- ===== 7 ===== -->
+<section id="s7">
+  <h2><span class="num">7</span>El diseño centrado en el usuario</h2>
+  <p>Diseñar sistemas interactivos significa pensar en la persona, centrar el desarrollo en ella e involucrarla lo más posible, incluso dentro del equipo de diseño. Es lo que ocurre, por ejemplo, al adaptar un ERP a una empresa.</p>
+  <div class="callout"><b>Ojo:</b> a veces los empleados se niegan a colaborar. Los estudios lo atribuyen a la poca adaptabilidad humana a cambios drásticos: se teme al nuevo sistema, a reestructuraciones, a que reduzca el trabajo y provoque despidos o jubilaciones anticipadas. Hay que contar con esa resistencia.</div>
+
+  <h3>Modelo de proceso de la Ingeniería de la Usabilidad y la Accesibilidad</h3>
+  <p>La <b>Ingeniería de la Usabilidad</b> es una metodología para conseguir usabilidad en las interfaces durante el desarrollo de un producto interactivo. Es multidisciplinar (psicología cognitiva y experimental, etnografía e ingeniería del software) y se hace en ciclos iterativos. Un diseño óptimo no sale solo de principios generales, porque cada producto y sus usuarios son únicos; pero aplicar métodos sin líneas de trabajo claras suele fracasar. El modelo sirve para ofimática, medicina, industria o web, para aplicaciones comerciales o a medida, pequeñas o muy complejas.</p>
+  <p>Su aporte es ordenar conceptos y se apoya en <b>tres pilares</b>, con el usuario en el centro y flechas que marcan la iteración:</p>
+  <div class="pillars">
+    <div class="pillar a"><h4>Ingeniería del software clásica</h4><p>Análisis, diseño, implementación e instalación.</p></div>
+    <div class="pillar b"><h4>Prototipado</h4><p>Técnicas que preparan la evaluación.</p></div>
+    <div class="pillar c"><h4>Evaluación</h4><p>Reúne y clasifica los métodos para medir la usabilidad.</p></div>
+  </div>
+  <p>Una dificultad central es <i>medir</i> la usabilidad. Los métodos se agrupan en tres tipos según qué evalúan y cómo: <b>inspección, indagación y test</b>.</p>
+  <figure class="fig">
+    <svg viewBox="0 0 480 365" role="img" aria-label="Modelo de proceso: ingeniería del software, prototipado y evaluación, con los usuarios en el centro y el proceso repetido en ciclos">
+      <defs><marker id="ah6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="g-fi"/></marker></defs>
+      <rect x="10" y="30" width="140" height="222" rx="12" class="g-fb" style="opacity:.14"/>
+      <rect x="170" y="30" width="140" height="222" rx="12" class="g-fok" style="opacity:.16"/>
+      <rect x="330" y="30" width="140" height="222" rx="12" class="g-fa" style="opacity:.2"/>
+      <text x="80" y="53" text-anchor="middle">Software clásico</text>
+      <text x="240" y="53" text-anchor="middle">Prototipado</text>
+      <text x="400" y="53" text-anchor="middle">Evaluación</text>
+      <g class="g-box" style="stroke-width:1.6">
+        <rect x="20" y="68" width="120" height="36" rx="8"/><rect x="20" y="112" width="120" height="36" rx="8"/>
+        <rect x="20" y="156" width="120" height="36" rx="8"/><rect x="20" y="200" width="120" height="36" rx="8"/>
+        <rect x="180" y="68" width="120" height="40" rx="8"/><rect x="180" y="116" width="120" height="40" rx="8"/><rect x="180" y="164" width="120" height="40" rx="8"/>
+        <rect x="340" y="68" width="120" height="40" rx="8"/><rect x="340" y="116" width="120" height="40" rx="8"/><rect x="340" y="164" width="120" height="40" rx="8"/>
+      </g>
+      <g style="font-size:13px" text-anchor="middle">
+        <text x="80" y="91">Análisis</text><text x="80" y="135">Diseño</text><text x="80" y="179">Implementación</text><text x="80" y="223">Instalación</text>
+        <text x="240" y="93">Maquetas</text>
+        <text x="240" y="134">Papel y</text><text x="240" y="148">storyboards</text>
+        <text x="240" y="182">Vídeo y</text><text x="240" y="196">software</text>
+        <text x="400" y="93">Inspección</text><text x="400" y="141">Indagación</text><text x="400" y="189">Test</text>
+      </g>
+      <line x1="152" y1="140" x2="168" y2="140" class="g-si" marker-start="url(#ah6)" marker-end="url(#ah6)"/>
+      <line x1="312" y1="140" x2="328" y2="140" class="g-si" marker-start="url(#ah6)" marker-end="url(#ah6)"/>
+      <path d="M80 254 L215 304 M240 254 L240 292 M400 254 L265 304" class="g-sd"/>
+      <circle cx="240" cy="322" r="34" class="g-fa"/>
+      <text x="240" y="327" text-anchor="middle" class="g-ona">Usuarios</text>
+    </svg>
+    <figcaption>Los usuarios están en el centro del ciclo y las fases se repiten (iteración).</figcaption>
+  </figure>
+
+  <h3>Fases del modelo</h3>
+  <ol class="steps" id="fases">
+    <li><b>Análisis de requisitos</b>Fija qué servicios debe dar el sistema y bajo qué restricciones: requisitos <i>funcionales</i> (qué servicio ofrece) y <i>no funcionales</i> (restricciones como el tiempo de respuesta o el lenguaje a usar). Aquí se añade lo que da el «factor diferencial» de usabilidad (ver actividades abajo).</li>
+    <li><b>Diseño</b>Se piensa la interfaz desde el principio, no al final: el usuario no se interesa por la estructura interna, sino por cómo usar la aplicación. Incluye análisis de tareas, modelo conceptual, definición de estilo y diseño detallado.</li>
+    <li><b>Prototipado</b>Simulaciones o partes implementadas del sistema final que responden preguntas y ayudan a elegir entre alternativas.</li>
+    <li><b>Evaluación</b>Se comprueba el funcionamiento por adelantado con usuarios, ya desde las primeras fases.</li>
+    <li><b>Implementación</b>Es la codificación de la aplicación, el terreno de la ingeniería de software clásica; el modelo se ocupa de la usabilidad, no de cómo programar.</li>
+    <li><b>Lanzamiento</b>Momento crítico donde se ven las expectativas cumplidas; incluye recoger el «feedback» del usuario.</li>
+  </ol>
+
+  <details>
+    <summary>Actividades del análisis de requisitos</summary>
+    <div class="body">
+      <ul>
+        <li><b>Análisis etnográfico:</b> observar y describir lo que la gente hace, cómo se comporta e interactúa, sus valores y motivaciones; hay que adentrarse en el grupo y aprender su lenguaje y costumbres.</li>
+        <li><b>Perfil de usuario:</b> características relevantes de quienes usarán la interfaz (experiencia informática, profesional, estudios, entorno social…).</li>
+        <li><b>Análisis contextual de tareas:</b> cómo realizan hoy sus tareas, qué patrones siguen y cuáles son sus objetivos.</li>
+        <li><b>Actores:</b> los distintos tipos de personas que intervienen, definidos por rasgos psicológicos o por rasgos relacionados con la tarea.</li>
+        <li><b>Roles:</b> clases de actores con ciertos conjuntos de tareas; un actor puede tener varios roles y un rol puede ser de varios actores.</li>
+        <li><b>Organización:</b> relación entre actores y roles; jerarquía y delegación de responsabilidades.</li>
+        <li><b>Objetos:</b> todo lo relevante en el trabajo, físico o conceptual (mensajes, contraseñas, firmas…).</li>
+        <li><b>Plataforma:</b> posibilidades y restricciones de la tecnología elegida.</li>
+        <li><b>Perfil del entorno:</b> el lugar de trabajo influye en cómo se hacen las tareas.</li>
+        <li><b>Objetivos de usabilidad:</b> metas cualitativas y cuantitativas (aprendizaje, consistencia, flexibilidad, robustez, recuperabilidad, tiempo de respuesta, adecuación a tareas y menor carga cognitiva).</li>
+        <li><b>Objetivos de la aplicación:</b> para qué se desarrolla, considerando requisitos funcionales y no funcionales.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Diseño: tareas, modelo conceptual, estilo y detalle</summary>
+    <div class="body">
+      <p><b>Análisis de tareas.</b> Reordena de forma estructurada la parte funcional de la información obtenida. Es «el proceso de analizar cómo las personas realizan sus trabajos: lo que hacen, sobre qué actúan y qué necesitan saber», incluso tareas ajenas al ordenador (buscar un documento en el archivador, cambiar el tóner). Todos los métodos parten de un objetivo, tareas y acciones. Algunos: HTA, GOMS, KLM, TAG, UAN, CTT y GTA.</p>
+      <p><b>Modelo conceptual.</b> Primeras alternativas de diseño; define las pantallas principales y sus caminos de navegación. Según Liddle, lo más importante es diseñar el modelo conceptual del usuario y subordinar todo lo demás a que sea claro y sólido. Hay modelos basados en <i>actividades</i> (instruir, conversar, manipular y navegar, explorar y hojear) y basados en <i>objetos</i> (una herramienta, un libro, un vehículo…).</p>
+      <p><b>Definir el estilo.</b> Garantiza coherencia visual y funcional y conviene documentarlo como guía de estilo, sobre todo porque las aplicaciones evolucionan y cambiar la presentación «despista» al usuario. Incluye:</p>
+      <ul>
+        <li><b>Estándares generales:</b> de facto (Macintosh, MS Windows, IBM SAA/CUA) y de organismos (ANSI, ISO, DIN, MIL-STD, NASA-STD); protegen la uniformidad y la eficiencia.</li>
+        <li><b>Metáforas:</b> ligan conceptos abstractos a ideas familiares (papeles, carpetas, buzones, papelera). Error común: querer que la metáfora se comporte literalmente como el objeto real; además, el significado cambia con el contexto cultural.</li>
+        <li><b>Colores:</b> una buena combinación hace la interfaz agradable y resalta lo crítico; pueden cambiar el sentido de una metáfora (luz roja = no disponible, verde = disponible).</li>
+        <li><b>Estándares particulares:</b> rasgos del cliente final (logotipo, colores corporativos, argot propio).</li>
+      </ul>
+      <p><b>Diseño detallado.</b> Resultado de las fases anteriores ya prototipadas y evaluadas al menos una vez; produce una versión con todos los detalles de la definitiva.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Prototipado: técnicas</summary>
+    <div class="body">
+      <ul>
+        <li><b>Maquetas:</b> modelos físicos básicos (madera, cartón) para evaluar una parte física del sistema.</li>
+        <li><b>Escenarios:</b> historias sobre personas y sus actividades; tienen configuración (dónde y con qué) y actores.</li>
+        <li><b>Prototipos de papel:</b> pantallas dibujadas con lápiz, papel y tijeras; muy rápidos, flexibles y económicos.</li>
+        <li><b>Storyboards:</b> viñetas que muestran la evolución de la situación del usuario, como una historieta; se combinan con los escenarios.</li>
+        <li><b>Herramientas de diagramación:</b> narrativa, <i>flowchart</i> (acciones y decisiones) y texto procedural (paso a paso).</li>
+        <li><b>Vídeos:</b> permiten parecer reales sistemas aún solo ideados; útiles en interfaces multimodales, como la voz.</li>
+        <li><b>Prototipos de software:</b> primeras versiones en el lenguaje final, tras varias iteraciones; sirven para probar funciones que los programadores no sabían cómo implementar.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Evaluación: inspección, indagación y test</summary>
+    <div class="body">
+      <h4>Inspección (expertos examinan la interfaz)</h4>
+      <ul>
+        <li><b>Heurística</b> (Nielsen y Molich): varios expertos comprueban la interfaz frente a las «10 reglas heurísticas de usabilidad», obtenidas del análisis de 249 problemas.</li>
+        <li><b>Recorrido de usabilidad plural</b> (Bias, IBM): tres tipos de participantes evalúan prototipos de papel y debaten al final.</li>
+        <li><b>Recorrido cognitivo:</b> evalúa la facilidad de aprendizaje por exploración, en el contexto de tareas concretas.</li>
+        <li><b>Estándares:</b> un experto revisa si la interfaz cumple los estándares.</li>
+      </ul>
+      <h4>Indagación (hablar con los usuarios y observarlos)</h4>
+      <ul>
+        <li><b>Observación de campo:</b> visitar el lugar de trabajo para ver cómo realizan tareas y qué modelo mental tienen; útil en las etapas de prueba y despliegue.</li>
+        <li><b>Focus group:</b> de 6 a 9 usuarios discuten el sistema con un moderador; recoge reacciones espontáneas.</li>
+        <li><b>Entrevistas:</b> forma directa y estructurada de recoger información; funcionan si se preparan bien y se complementan con cuestionarios.</li>
+        <li><b>Logging:</b> una aplicación secundaria registra la actividad del usuario sin que se note, para analizarla después.</li>
+        <li><b>Cuestionarios:</b> menos flexibles que la entrevista pero llegan a más gente y se analizan con más rigor; deben ser claros y sin ambigüedades.</li>
+      </ul>
+      <h4>Test (usuarios representativos realizan tareas)</h4>
+      <ul>
+        <li><b>Medida de las prestaciones:</b> test con usuarios reales haciendo tareas reales, para mejorar la usabilidad.</li>
+        <li><b>Thinking aloud:</b> el usuario dice en voz alta lo que piensa y siente mientras usa el sistema.</li>
+        <li><b>Interacción constructiva:</b> lo mismo, pero con dos usuarios que hablan entre sí; suele dar más y mejor información.</li>
+        <li><b>Test retrospectivo:</b> se graba en vídeo otro método y se analiza después, repasando todos los detalles.</li>
+        <li><b>Método del conductor:</b> el evaluador guía al usuario durante el uso.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Lanzamiento y feedback del usuario</summary>
+    <div class="body">
+      <p>El éxito depende de dos cosas: que el usuario se sienta cómodo (sin errores, sin complicaciones, recordando dónde está cada opción) y que los responsables obtengan los resultados esperados. Al haber diseñado con los usuarios y evaluado con ellos, se logra lo primero y baja la carga de aprendizaje; y como en todo software, la evaluación funcional va primero.</p>
+      <p>Tras un periodo de pruebas se recoge el <b>feedback</b> (impresiones, quejas, mejoras, defectos) y se retoca el producto hasta lograr satisfacción total. Mayhew da cuatro razones para hacerlo:</p>
+      <ul>
+        <li>Aporta datos para el mantenimiento y mejoras del producto.</li>
+        <li>Aporta datos para futuras revisiones.</li>
+        <li>Aporta datos para diseñar productos relacionados para los mismos usuarios.</li>
+        <li>Aumenta el autoaprendizaje sobre usabilidad.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ===== Quiz ===== -->
+<section id="quiz">
+  <h2>Repaso rápido</h2>
+  <p class="lead">Cinco preguntas para comprobar lo que leíste.</p>
+  <div id="qbox"></div>
+  <div id="score" aria-live="polite"></div>
+  <button class="btn" id="retry" hidden>Intentar de nuevo</button>
+</section>
+
+<footer>
+  <p><b>Fuente:</b> <i>La interacción persona-ordenador</i> (AIPO), Capítulo 1 «Introducción a la Interacción Persona-Ordenador» (última modificación del capítulo: 03/05/2002). Esta página es un resumen redactado con palabras propias con fines de estudio; para el texto original, consulta el libro.</p>
+</footer>
+</main>
+
+<button id="top" aria-label="Volver arriba">↑</button>
+
+<script>
+(function(){
+  /* Barra de progreso y botón de subir */
+  var bar=document.getElementById('progress'), topBtn=document.getElementById('top');
+  var ticking=false;
+  function paint(){
+    ticking=false;
+    var h=document.documentElement, st=window.pageYOffset||h.scrollTop, max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(st/max*100):0)+'%';
+    topBtn.classList.toggle('show',st>600);
+  }
+  function onScroll(){ if(!ticking){ticking=true;requestAnimationFrame(paint);} }
+  window.addEventListener('scroll',onScroll,{passive:true}); paint();
+  topBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* Índice: resaltar sección visible */
+  var links=[].slice.call(document.querySelectorAll('#toc a'));
+  var map={}; links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  var tocBar=document.getElementById('toc');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var a=map[e.target.id];
+        if(e.isIntersecting && a && !a.classList.contains('active')){
+          links.forEach(function(l){l.classList.remove('active');});
+          a.classList.add('active');
+          /* mover solo la barra del índice (no la página) */
+          tocBar.scrollLeft=a.offsetLeft-(tocBar.clientWidth-a.offsetWidth)/2;
+        }
+      });
+    },{rootMargin:'-30% 0px -60% 0px'});
+    Object.keys(map).forEach(function(id){var el=document.getElementById(id); if(el) io.observe(el);});
+  }
+
+  /* Filtro de la línea de tiempo */
+  var fbtns=[].slice.call(document.querySelectorAll('#tl-filters button'));
+  var items=[].slice.call(document.querySelectorAll('#timeline li'));
+  fbtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.getAttribute('data-f');
+      fbtns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+      items.forEach(function(li){
+        var show=f==='all'||li.getAttribute('data-c').split(' ').indexOf(f)>-1;
+        li.hidden=!show;
+      });
+    });
+  });
+
+  /* Quiz */
+  var Q=[
+    {q:'¿Qué significa IPO?',o:['Interfaz Personal Operativa','Interacción Persona-Ordenador','Integración de Procesos Operativos'],a:1,e:'Es el equivalente en español de HCI/CHI.'},
+    {q:'¿Qué dos ideas forman el principio de «affordance»?',o:['Velocidad y precio','Visibilidad y comprensión intuitiva','Consistencia y robustez'],a:1,e:'Para actuar sobre un objeto debe verse y debe ser evidente cómo usarlo.'},
+    {q:'¿Cómo se define la usabilidad?',o:['Que el sistema tenga muchas funciones','Efectividad, eficiencia y satisfacción para usuarios y objetivos concretos en un contexto','Que el código sea corto'],a:1,e:'Es la medida en que un producto se usa con efectividad, eficiencia y satisfacción.'},
+    {q:'¿Qué tipo de evaluación hacen varios expertos al comprobar la interfaz con las 10 reglas heurísticas?',o:['Test con usuarios','Indagación','Inspección'],a:2,e:'La evaluación heurística es un método de inspección (Nielsen y Molich).'},
+    {q:'Según el capítulo, ¿qué debe adaptarse a quién?',o:['Los usuarios deben cambiar para adaptarse al sistema','Los sistemas deben diseñarse para satisfacer lo que necesita el usuario','Ninguno, cada uno hace lo suyo'],a:1,e:'Los usuarios no han de cambiar radicalmente su manera de ser.'}
+  ];
+  var box=document.getElementById('qbox'), score=document.getElementById('score'), retry=document.getElementById('retry');
+  var correct=0, answered=0;
+  function build(){
+    box.innerHTML=''; correct=0; answered=0; score.textContent=''; retry.hidden=true;
+    Q.forEach(function(item,i){
+      var d=document.createElement('div'); d.className='q';
+      var p=document.createElement('p'); p.textContent=(i+1)+'. '+item.q; d.appendChild(p);
+      var fb=document.createElement('div'); fb.className='fb';
+      var btns=[];
+      item.o.forEach(function(t,j){
+        var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent=t;
+        b.addEventListener('click',function(){
+          btns.forEach(function(x){x.disabled=true;});
+          answered++;
+          if(j===item.a){b.classList.add('ok');correct++;fb.textContent='¡Correcto! '+item.e;}
+          else{b.classList.add('bad');btns[item.a].classList.add('ok');fb.textContent='No exactamente. '+item.e;}
+          if(answered===Q.length){score.textContent='Resultado: '+correct+' de '+Q.length;retry.hidden=false;}
+        });
+        btns.push(b); d.appendChild(b);
+      });
+      d.appendChild(fb); box.appendChild(d);
+    });
+  }
+  retry.addEventListener('click',function(){build();document.getElementById('quiz').scrollIntoView({behavior:'smooth'});});
+  build();
+})();
+</script>
+</body>
+</html>
